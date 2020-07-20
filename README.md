@@ -42,6 +42,9 @@ Find the file `index.js` and complete the tasks.
 Edit the `ReadMe` file with your answers.
 
 1. In your own words, define closure (1-2 sentences).
+
+- Closure is where there are two functions bundled together, and the inner function can access the outer functions scope even when the outer scope is inactive.
+
 2. Study the following code, then answer the questions below.
 
 ```js
@@ -63,8 +66,16 @@ dansRoll();
 ```
 
 a. Where is closure used in this code? How can you tell?
+
+- Closure is used with the inner function inside of the personalDice function.
+
 b. Compare and contrast calling `dansRoll` the first and second time. What is always the same? What could change?
+
+- The name is always the same and the dice number always changes between 0-5.
+
 c. What is the lexical scope of `newRoll`? 
+
+- It's inside the callback function, so you would need to invoke personalDice and then invoke it again
 
 ### Task 2c - Exit Ticket
 
