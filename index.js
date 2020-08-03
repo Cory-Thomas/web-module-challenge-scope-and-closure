@@ -28,9 +28,15 @@ function processFirstItem(stringList, callback) {
  * 
  * 1. What is the difference between counter1 and counter2?
  * 
+ * - Counter1 is an example of closure and counter2 is an example of basic scope. However, neither of them have been invoked so in counterMaker the counter function would not be called yet.
+ * 
  * 2. Which of the two uses a closure? How can you tell?
  * 
+ * - counter1 uses closure. Because their is a callback function inside of counterMaker that has not yet been invoked.
+ * 
  * 3. In what scenario would the counter1 code be preferable? In what scenario would counter2 be better? 
+ * 
+ * - count1 is preferable if you want the count variable data to be stored even when it is inactive. count2 is preferable when you want a piece of returned data to be a little more predictable.
  *
 */
 
@@ -56,11 +62,15 @@ function counter2() {
 
 Write a function called `inning` that returns a random number of points that a team scored in an inning. This should be a whole number between 0 and 2. */
 
-function inning(/*Code Here*/){
 
-    /*Code Here*/
+function inning(){
+  let points = Math.floor( Math.random() * 3 );
 
+  return points;
 }
+
+// console.log( inning() );
+
 
 /* Task 3: finalScore()
 
@@ -76,11 +86,23 @@ finalScore(inning, 9) might return:
 
 */ 
 
-function finalScore(/*code Here*/){
+function finalScore( callback, num ){
+  let homeVar = 0;
+  let awayVar = 0;
 
-  /*Code Here*/
+  for(let i = 0; i < num; i++){
+    homeVar += callback();
+    awayVar += callback();
+  }
 
+  return {
+    Home: homeVar,
+    Away: awayVar,
+  }
 }
+
+// console.log( finalScore(inning, 9) );
+
 
 /* Task 4: 
 
@@ -103,8 +125,32 @@ and returns the score at each pont in the game, like so:
 Final Score: awayTeam - homeTeam */
 
 
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
+function getInningScore( inningCB ) {
+  return {
+    Home: inningCB(),
+    Away: inningCB(),
+  }
 }
+
+// console.log( getInningScore(inning) );
+
+
+function scoreboard( inningScoreCB, inningCB, numInnings ) {
+  let score, homeTotal = 0, awayTotal = 0;
+
+  for(let i = 0; i < numInnings; i++){
+    score = inningScoreCB( inningCB );
+    let homeScore = score.Home;
+    let awayScore = score.Away;
+
+    console.log( `${i + 1} inning: Away Team - ${awayScore} :: Home Team - ${homeScore}` );
+    homeTotal += homeScore;
+    awayTotal += awayScore;
+  }
+
+  console.log(`Final Score: Away Team - ${awayTotal} :: Home Team - ${homeTotal}`);
+}
+
+scoreboard( getInningScore, inning, 9);
 
 
